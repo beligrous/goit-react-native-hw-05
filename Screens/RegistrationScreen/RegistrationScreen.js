@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -11,13 +11,12 @@ import {
   Platform,
   Keyboard,
 } from "react-native";
+import { useUser } from "../../src/userContext";
 // import { Dimensions } from "react-native";
 import { useFonts } from "expo-font";
 // import * as SplashScreen from "expo-splash-screen";
 
 // SplashScreen.preventAutoHideAsync();
-
-let data = null;
 
 function RegistrationScreen({ navigation }) {
   const [isKeyboard, setIsKeyboard] = useState(false);
@@ -27,6 +26,8 @@ function RegistrationScreen({ navigation }) {
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { logIn } = useUser();
 
   // const [dimensions, setDimensions] = useState(
   //   Dimensions.get("window").width - 16 * 2
@@ -47,7 +48,7 @@ function RegistrationScreen({ navigation }) {
   // }, []);
 
   const formSubmit = () => {
-    data = { login, email, password };
+    logIn({ login, email, password });
     setEmail("");
     setLogin("");
     setPassword("");
@@ -143,7 +144,6 @@ function RegistrationScreen({ navigation }) {
 }
 
 export default RegistrationScreen;
-export const userContext = createContext(data);
 
 const styles = StyleSheet.create({
   image: {

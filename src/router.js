@@ -5,6 +5,7 @@ import CreatePostsScreen from "../Screens/Main/CreatePostsScreen";
 import ProfileScreen from "../Screens/Main/ProfileScreen";
 import LoginScreen from "../Screens/LoginScreen/LoginScreen";
 import RegistrationScreen from "../Screens/RegistrationScreen/RegistrationScreen";
+import { useUser } from "./userContext";
 import {
   AntDesign,
   Feather,
@@ -14,7 +15,9 @@ import {
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const router = (isAuth) => {
+const Router = () => {
+  const { isAuth } = useUser();
+
   const authpath = (
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
@@ -71,10 +74,7 @@ const router = (isAuth) => {
     </Tab.Navigator>
   );
 
-  if (!isAuth) {
-    return authpath;
-  }
-  return homepath;
+  return !isAuth ? authpath : homepath;
 };
 
-export default router;
+export default Router;
