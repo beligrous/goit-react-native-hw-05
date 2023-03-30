@@ -31,6 +31,10 @@ const CreatePostsScreen = ({ navigation }) => {
     navigation.navigate("Публікації", { photo });
   };
 
+  const deletePhoto = () => {
+    setPhoto("");
+  };
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -93,6 +97,15 @@ const CreatePostsScreen = ({ navigation }) => {
           >
             <Text>Опублікувати</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={deletePhoto}
+            style={{
+              marginTop: 100,
+              alignSelf: "center",
+            }}
+          >
+            <Image source={require("../image/trash.png")} />
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -129,6 +142,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderRadius: 100,
+    borderColor: "transparent",
   },
   input: {
     fontFamily: "Roboto-Regular",
