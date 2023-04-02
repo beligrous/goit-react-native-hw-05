@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   TouchableWithoutFeedback,
   TouchableOpacity,
@@ -10,6 +10,7 @@ import {
   Text,
 } from "react-native";
 import { Camera, CameraType } from "expo-camera";
+import * as Location from "expo-location";
 
 const CreatePostsScreen = ({ navigation }) => {
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -24,16 +25,27 @@ const CreatePostsScreen = ({ navigation }) => {
 
   const takePhoto = async () => {
     const photo = await snap.takePictureAsync();
+    const location = await Location.getCurrentPositionAsync();
     setPhoto(photo.uri);
   };
 
   const sendPhoto = () => {
-    navigation.navigate("Публікації", { photo });
+    navigation.navigate("Posts", { photo });
   };
 
   const deletePhoto = () => {
     setPhoto("");
   };
+
+  useEffect(() => {
+    async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+    };
+  }, []);
 
   return (
     <TouchableWithoutFeedback

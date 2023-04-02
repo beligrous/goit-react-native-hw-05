@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { Image, View, StyleSheet, FlatList } from "react-native";
+import { Image, View, StyleSheet, FlatList, Pressable } from "react-native";
 
-const PostsScreen = ({ route }) => {
+const PostsScreen = ({ navigation, route }) => {
   const [posts, setPosts] = useState([]);
-  console.log(posts);
 
   useEffect(() => {
     if (!route.params) {
@@ -20,6 +19,14 @@ const PostsScreen = ({ route }) => {
         renderItem={({ item }) => (
           <View style={{ marginBottom: 32 }}>
             <Image source={{ uri: item.photo }} style={styles.image} />
+            <View style={styles.nested}>
+              <Pressable onPress={() => navigation.navigate("Comments")}>
+                <Image source={require("../image/message-circle.png")} />
+              </Pressable>
+              <Pressable onPress={() => navigation.navigate("Map")}>
+                <Image source={require("../image/map-pin.png")} />
+              </Pressable>
+            </View>
           </View>
         )}
       />
@@ -35,6 +42,9 @@ const styles = StyleSheet.create({
     width: 340,
     height: 240,
     borderRadius: 8,
+  },
+  nested: {
+    flexDirection: "row",
   },
 });
 
